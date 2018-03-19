@@ -1,0 +1,69 @@
+Spring boot starter parent - is a starter pom that encapsulates all the dependencies for Spring Boot. It is used as base.
+A set of pre-configured dependencies and other configurations that allow us to quickly get started with a Spring project.
+We don't have to hunt for appropriate dependencies.
+
+Spring boot CLI
+---------------
+CLI - command line interface. After spring boot cli is downloaded and extracted into a folder add the bin folder to PATH
+navigate to the bin folder of spring boot CLI and run "setx PATH %CD%"
+If running spring --version shows errors then close the current prompt and open a new one.
+write a new groovy controller. Refer to - C:\Rekha\workspace\spring-boot-groovy-application.groovy file. 
+Run this file - "spring run spring-boot-groovy-application.groovy".
+
+@RestController
+class HelloWorld {
+	
+	@RequestMapping ("/")
+	def hello () {
+		return "hello, welcome to Boot CLI"
+	}
+}
+
+@EnableAutoConfiguration
+------------------------
+This configuration is used to enable Spring boot to make intelligent guesses about the beans and configuration we will need within our
+project. 
+It is important we place this configuration on the starting class - Application.class that is annotated with @SpringBootApplication
+It is important that the main class resides within a properly packaged structure. Placing this file in the default package
+will cause some problems when scanning for JPA and other packages automatically.
+This Annotation marks as the starting point for scanning packages later.
+
+EX- once we expand "starter-web" we see an embedded tomcat. This Annotation when looks at this guesses the application to be web based
+and adds configurations appropriate.
+To enable debug output - go to "run configurations" and select the boot app. On the main tab check "enable debug output".
+If we inspect the output, on top of the console we can see "Positive Matches" that indicate the conditional Annotations, this annotation
+applies to apply configurations. Check the jar file under "Maven Dependencies" - "spring-boot-autoconfigure-2.0.0.RELEASE-sources.jar"
+
+We can feed configurations to the server in the "Run Configuration" -> Boot Application -> Arguments tab ->
+--server.port=9000 --server.context.path=/test 
+These arguments passed in the Run Configurations are the same properties added to application.properties file
+
+
+@SpringBootApplication - is equivalent of @EnableAutoConfiguration, @Configuration, @ComponentScan
+
+Spring Boot projects can also be created from "http://start.spring.io/"
+
+Building Boot with Gradle
+-------------------------
+gradlew found in the root of a spring boot gradle project is a wrapper around a particular version of gradle. This gradlew makes sure
+everyone running our project uses the same version of gradle. Also this wrapper eliminates the need to install gradle in the system
+to build spring boot - gradlew bootRun
+
+NOTE : These classes should be re-visited as I ran into multiple issues trying to configure gradle projects.
+
+Profiles
+--------
+If a profile is marked as active in application.properties - "spring.profiles.active=dev" [spring-boot-advanced-configuration] But
+if we pass the argument in the "Run Configuration" - --spring.profiles.active=prod then the argument takes precedence over
+the property in application.properties
+
+Another way to achieve the same results is to have application-<profile>.properties and mention the argument 
+--spring.profiles.active=<profile> in the run configuration. If we go this route then we don't need to have @Profile Annoation in the 
+Application class file. Refer to spring-boot-advanced-configuration
+
+Execute a block of code when application starts
+------------------------------------------------
+There are 2 interfaces provided my Spring - ApplicationRunner and CommandLineRunner.
+Also there is an example of using ApplicationArguments - these are the arguments passed in the "Run Configuration" - argument=Hey There
+Refer to spring-boot-advanced-configuration - MyCommandLineRunner and MyApplicationRunner
+These classes are used when there is a need to execute/run something at the time Spring Boot App runs.

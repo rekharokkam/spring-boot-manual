@@ -1,0 +1,5 @@
+spring.application.name=Spring-Boot-Manual
+server.port=9000
+server.servlet.context-path=/test
+name=Spring Boot ${type}
+type=Framework
